@@ -1,0 +1,27 @@
+{
+  "name": "sirena",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"nodemon ganymede/ganymede.js\" \"nodemon themisto/themisto.js\" "
+  },
+  "author": "Jorge Buitrago",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.0",
+    "dotenv": "^6.2.0",
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^2.5.0",
+    "koa-ejs": "^4.1.2",
+    "koa-http-request": "^2.2.1",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^2.0.1",
+    "koa-mongo": "^1.5.0",
+    "koa-request": "^1.0.0",
+    "koa-router": "^7.4.0",
+    "nodemon": "^1.18.9",
+    "puppeteer": "^1.11.0",
+    "save": "^2.3.3"
+  }
+}
