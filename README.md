@@ -1,6 +1,6 @@
 # Sirena
 
-Requerimientos Tecnicos
+###Requerimientos Tecnicos
 
 $ node -v
 v8.12.0
@@ -12,7 +12,7 @@ $ npm -v
 6.4.1
 
 
-Instalacion
+###Instalacion
 
 1- Clonar el respositorio
 
@@ -55,9 +55,55 @@ show collections;
 npm start
 
 
+### Proyecto Postman
+
+https://documenter.getpostman.com/view/5855376/RznBP1bF
 
 
-Descripcion de Ejercicio
+###Descripcion de Ejercicio
+
+Se desarrollo de la siguiente manera:
+
+- Se creo el archivo de configuracion .env
+
+    PORT_G      = 3000 //Puerto Ganimede
+    HOST_G      = http://localhost //Host Ganimede
+    PORT_T      = 3001 //Puerto Themisto
+    HOST_T      = http://localhost   //Host Themisto
+    MONGODB_DB  = sirena //Base de datos sirena en Mongodb
+    USER        = sirena //Usuario para acceder al POST /api/product/search
+    PASSWORD    = sirena123  //Password para acceder al POST /api/product/search
+    PROVIDER_ALIAS = easy //Proveedor
+    PROVIDER_PATH  = https://www.easy.com.ar/ //Proveedor Path
+    NUMPAGES =   //Numero de paginas que quiere rastrear, si se elimina esta variable se rastrearan todas
+
+- Se crearon 2 Api con Koa
+    -Api Ganymede http://localhost:3000
+        -En esta Api se crearon los siguientes Endpoint
+            -POST /api/product/search
+            -GET /api/product/search-order/{searchOrderId}
+            -GET /api/product/search-order/list
+            -GET /api/product/{searchOrderId}
+
+
+
+    -Api Themisto http://localhost:3001
+        -En esta Api se creo un Endpoint que hace el rastre con Google Puppeteer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .env
 
@@ -69,50 +115,13 @@ si se deja vacia procesara completamente.
 https://www.npmjs.com/package/koa-mongo
 
 
-- Generar orden
+- Proyecto Postman
 
-POST
-
-http://localhost:3000/api/product/search/
-
-Body
-{
-  "searchQuery": "tornillos",
-  "provider": "easy",
-  "options": {
-   "user": "sirena",
-   "password": "sirena123"
-  },
-   "callbackUrl": "http://localhost:3000/"
-
- }
-
---Ver estado de la orden
-
- http://localhost:3000/api/product/search-order/:searchOrderId
-
- Ejemplo:
-
-
- http://localhost:3000/api/product/category/5c29a2faac9fb8f9bdf0c29b
-
-
---Ver todas las ordenes creadas
-
- http://localhost:3000/api/product/search-order2/list
-
-
---Consultar productos con # de Orden
-
-No se estan guardando las categorias porque no las estoy rastreando asi que cambie la Endpoint para que muestre los productos
-con el searchOrderId
-
-GET
-http://localhost:3000/api/product/category/:searchOrderId
-http://localhost:3000/api/product/category/5c29a2faac9fb8f9bdf0c29b
-
+https://documenter.getpostman.com/view/5855376/RznBP1bF
 
 
 Nota: Los productos que probe son tuerca, bisagra,tornillo
+
+
 
 

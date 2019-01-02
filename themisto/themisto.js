@@ -9,7 +9,7 @@ var ObjectId = require('mongodb').ObjectID
 require('dotenv').load()
 
 var app = new Koa()
-
+var helpers = require('../helpers/helpers');
 
 //New api router
 var router = new Router({
@@ -22,7 +22,7 @@ app.use(bodyParser())
 
 // Ejecutar proceso Themisto
 router.post("/puppeteer", async (ctx) => {
-
+    let request=[]
     const body = ctx.request.body
     console.log("THEMISTO***")
     const orderId = body.orderId
@@ -63,7 +63,7 @@ router.post("/puppeteer", async (ctx) => {
                 numPages = 1
             } else {
 
-                if(process.env.NUMPAGES){
+                if(process.env.NUMPAGES >0){
                     numPages = process.env.NUMPAGES
                 }else{
                     numPages = parseInt(limitEnd / itemsForPage) + 1
@@ -97,7 +97,8 @@ router.post("/puppeteer", async (ctx) => {
                             price: item.price,
                             img: item.img,
                             orderId: orderId,
-                            searchQuery: searchQuery
+                            searchQuery: searchQuery,
+                            dateCreated:Date.now()
 
                         }
                         //Insert Products
@@ -121,17 +122,19 @@ router.post("/puppeteer", async (ctx) => {
             }
             //order status=processed
             const processed = await ctx.mongo.db(process.env.MONGODB_DB).collection('orders').update({ "_id": ObjectId(orderId) }, { $set: { "status": "processed" } })
+            request=helpers.createResponse(200,{message:'Order processed'})
             await browser.close()
 
         })()
     } catch (err) {
         //order status=failed
-        const failed = await ctx.mongo.db(process.env.MONGODB_DB).collection('orders').update({ "_id": ObjectId(orderId) }, { $set: { "status": "failed" } })
 
+        const failed = await ctx.mongo.db(process.env.MONGODB_DB).collection('orders').update({ "_id": ObjectId(orderId) }, { $set: { "status": "failed" } })
+        request=helpers.createResponse(200,{message:'Order Failed'})
     }
 
 
-    ctx.body = { result: "Procesado correctamente" }
+    ctx.body = request
 
 })
 
