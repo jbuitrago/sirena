@@ -24,7 +24,7 @@ app.use(bodyParser())
 router.post("/puppeteer", async (ctx) => {
     let request=[]
     const body = ctx.request.body
-    console.log("THEMISTO***")
+    console.log("Procesando Themisto...")
     const orderId = body.orderId
 
     //order status=processing
@@ -127,10 +127,10 @@ router.post("/puppeteer", async (ctx) => {
 
         })()
     } catch (err) {
-        //order status=failed
+
 
         const failed = await ctx.mongo.db(process.env.MONGODB_DB).collection('orders').update({ "_id": ObjectId(orderId) }, { $set: { "status": "failed" } })
-        request=helpers.createResponse(200,{message:'Order Failed'})
+        request=helpers.createResponse(400,{message:'Order Failed'})
     }
 
 

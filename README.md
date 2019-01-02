@@ -103,7 +103,7 @@ Se desarrollo de la siguiente manera:
 
 Nota:
 -   No se trabajo con mongoose porque tuve algunos problemas con la version de Koa 2 asi que cambie por koa-mongo https://www.npmjs.com/package/koa-mongo
--   os productos que probe son tuercaS, bisagra,tornillo,tuercas amarillas
+-   Los productos que probe son tuercaS, bisagra,tornillo,tuercas amarillas
 
 
 

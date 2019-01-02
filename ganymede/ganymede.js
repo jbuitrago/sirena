@@ -30,7 +30,8 @@ router.get('/', (ctx, next) => {
 
 // POST /api/product/search
 router.post("/product/search/", async (ctx) => {
-console.log(process.env.HOST_T + ":" + process.env.PORT_T  + "/api")
+    console.log("Procesando Ganymede...")
+
     let request=[]
     //Get body
     try {
@@ -44,7 +45,6 @@ console.log(process.env.HOST_T + ":" + process.env.PORT_T  + "/api")
                 //order status=received
                 const order = await ctx.mongo.db(process.env.MONGODB_DB).collection('orders').insert({ search: body.searchQuery, status: "received", callbackurl: body.callbackUrl, dateCreated:Date.now() })
                 //New Request to Themisto
-                console.log("GANYMEDE***")
                 const orderId = order.ops[0]._id
 
                 let params = {
@@ -57,8 +57,6 @@ console.log(process.env.HOST_T + ":" + process.env.PORT_T  + "/api")
                     let themisto = await ctx.post('/puppeteer', params, {
                         'User-Agent': 'koa-http-request'
                     });
-                    console.log("respuesta themisto:***")
-                    console.log(themisto)
 
                     request=helpers.createResponse(200,{ orderId: orderId })
 
@@ -80,13 +78,8 @@ console.log(process.env.HOST_T + ":" + process.env.PORT_T  + "/api")
         ctx.body = request
     }
     catch (err) {
-
-       console.log(err);
-        result = {
-            status: 400
-        }
-
-        ctx.body = result
+        request=helpers.createResponse(400,{message:err})
+        ctx.body = request
     }
 
 
